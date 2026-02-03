@@ -81,7 +81,7 @@ header p {
 
 .product-card:target {
     animation: magic-blink 2.5s ease-in-out;
-    scroll-margin-top: 2rem; /* Ensure it's not hidden behind fixed headers if any */
+    scroll-margin-top: 2rem; /* Ensure it's not hidden behind fixed headers if any ok */
 }
 
 .product-image {
