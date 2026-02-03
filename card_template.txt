@@ -1,6 +1,7 @@
 <!-- COPY THE CODE BELOW FOR EACH NEW PRODUCT -->
 
-<div class="product-card">
+<!-- IMPORTANT: Change id="product-X" to a unique number (e.g., product-4, product-5) -->
+<div class="product-card" id="product-X">
     <div class="product-image">
         <!-- STEP 1: PASTE IMAGE LINK INSIDE src="" BELOW -->
         <img src="https://via.placeholder.com/300x300?text=New+Product" alt="New Product">
