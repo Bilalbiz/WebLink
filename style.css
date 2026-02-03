@@ -56,7 +56,7 @@ header p {
         box-shadow: inset 0 0 0 0 rgba(255, 215, 0, 0), 0 0 0 0 rgba(255, 215, 0, 0);
     }
     25% {
-        background-color: #ffe79a;
+        background-color: #b2ff9a;
         box-shadow: inset 0 0 60px 20px rgba(255, 215, 0, 0.65), 0 0 25px 8px rgba(255, 215, 0, 1);
     }
     50% {
@@ -64,7 +64,7 @@ header p {
         box-shadow: inset 0 0 0 0 rgba(255, 215, 0, 0), 0 0 0 0 rgba(255, 215, 0, 0);
     }
     75% {
-        background-color: #ffe79a;
+        background-color: #b74fe0;
         box-shadow: inset 0 0 60px 20px rgba(255, 215, 0, 0.65), 0 0 25px 8px rgba(255, 215, 0, 1);
     }
     100% {
