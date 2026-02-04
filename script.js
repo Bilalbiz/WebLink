@@ -6,7 +6,6 @@ function filterSelection(category) {
     buttons.forEach(btn => {
         btn.classList.remove('active');
         // Check if the button's onclick attribute contains the category
-        // OR simply check if the button text matches (but data attribute or arg is better)
         if (btn.getAttribute('onclick').includes(`'${category}'`)) {
             btn.classList.add('active');
         }
@@ -16,7 +15,6 @@ function filterSelection(category) {
     sections.forEach(section => {
         if (category === 'all' || section.id === category) {
             section.style.display = 'block';
-            // Optional: Add a small animation effect
             section.style.animation = 'fadeIn 0.5s';
         } else {
             section.style.display = 'none';
@@ -33,3 +31,34 @@ style.innerHTML = `
     }
 `;
 document.head.appendChild(style);
+
+// AUTOMATICALLY DETECT SECTION FROM URL LINK
+// This runs when the page finishes loading
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Check if there is a hash in the URL (e.g., #product-7)
+    const hash = window.location.hash;
+
+    if (hash) {
+        // Remove the '#' character to get the ID
+        const targetId = hash.substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+            // 2. Find which section this product belongs to
+            const section = targetElement.closest('.filter-section');
+            
+            if (section) {
+                // 3. Switch the filter to that section
+                filterSelection(section.id);
+                
+                // 4. Scroll to the product (give a small delay to ensure it's visible)
+                setTimeout(() => {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    } else {
+        // Default to 'all' if no specific product link
+        filterSelection('all');
+    }
+});
