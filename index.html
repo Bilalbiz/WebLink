@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Favorite Finds</title>
-    <link rel="stylesheet" href="style.css?v=3">
+    <!-- Link to the CSS file for styling. ?v=4 ensures the latest version is loaded -->
+    <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
     <header>
         <h1>My Curated Collection</h1>
         <p>Best products found just for you</p>
+        
+        <!-- NAVIGATION BAR: Click these buttons to filter sections -->
         <nav class="category-nav">
             <button class="nav-btn active" onclick="filterSelection('all')">All</button>
             <button class="nav-btn" onclick="filterSelection('nails')">Nails</button>
@@ -19,10 +22,14 @@
     </header>
     
     <main>
+        <!-- ========================================================================== -->
         <!-- SECTION 1: NAILS -->
+        <!-- All products with id="nails" will show when "Nails" is clicked -->
+        <!-- ========================================================================== -->
         <section class="filter-section" id="nails">
             <h2>Nails</h2>
             <div class="gallery">
+                
                 <!-- Product Card 1 -->
                 <div class="product-card" id="product-1">
                     <div class="product-image">
@@ -59,6 +66,7 @@
                     </div>
                 </div>
                 
+                <!-- Product Card 4 -->
                 <div class="product-card" id="product-4">
                     <div class="product-image">
                         <img src="https://m.media-amazon.com/images/I/71BboxILfcL._SX466_PIbundle-24,TopRight,0,0_AA466SH20_.jpg" alt="New Product">
@@ -70,6 +78,7 @@
                     </div>
                 </div>
                 
+                <!-- Product Card 5 -->
                 <div class="product-card" id="product-5">
                     <div class="product-image">
                         <img src="https://m.media-amazon.com/images/I/71nWC+-eMXL._SX466_.jpg" alt="New Product">
@@ -81,6 +90,7 @@
                     </div>
                 </div>
                 
+                <!-- Product Card 6 -->
                 <div class="product-card" id="product-6">
                     <div class="product-image">
                         <img src="https://m.media-amazon.com/images/I/81v6HChJHBL._SX466_.jpg" alt="New Product">
@@ -91,31 +101,8 @@
                         <a href="https://amzn.to/4knrk9m" class="buy-button" target="_blank">View on Amazon</a>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- SECTION 2: BEAUTY -->
-        <section class="filter-section" id="beauty">
-            <h2>Beauty & Makeup</h2>
-            <div class="gallery">
-                <!-- Placeholder for Beauty Products -->
-                <div class="product-card" id="product-beauty-1">
-                    <div class="product-image">
-                        <img src="https://via.placeholder.com/300x300?text=Beauty+Product" alt="Beauty Product">
-                    </div>
-                    <div class="product-info">
-                        <h2>Beauty Product Placeholder</h2>
-                        <p>Add your beauty products here.</p>
-                        <a href="#" class="buy-button" target="_blank">View Item</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 3: FASHION -->
-        <section class="filter-section" id="fashion">
-            <h2>Fashion</h2>
-            <div class="gallery">
+                <!-- Product Card 7 (Moved from Fashion) -->
                 <div class="product-card" id="product-7">
                     <div class="product-image">
                         <img src="https://m.media-amazon.com/images/I/51IG14v4U0L._SX679_PIbundle-24,TopRight,0,0_AA679SH20_.jpg" alt="New Product">
@@ -127,6 +114,7 @@
                     </div>
                 </div>
                 
+                <!-- Product Card 8 (Moved from Fashion) -->
                 <div class="product-card" id="product-8">
                     <div class="product-image">
                         <img src="https://m.media-amazon.com/images/I/712mp7mjEwL._SX466_.jpg" alt="New Product">
@@ -138,6 +126,7 @@
                     </div>
                 </div>
                 
+                <!-- Product Card 9 (Moved from Fashion) -->
                 <div class="product-card" id="product-9">
                     <div class="product-image">
                         <img src="https://m.media-amazon.com/images/I/61C6Ui-WGJL._SX466_.jpg" alt="New Product">
@@ -148,26 +137,94 @@
                         <a href="https://amzn.to/3ZhSWmx" class="buy-button" target="_blank">View on Amazon</a>
                     </div>
                 </div>
+
+                <!-- ********************************************************************** -->
+                <!-- ADD MORE NAIL PRODUCTS BELOW THIS LINE -->
+                <!-- Copy the template code at the bottom of this file and paste it here -->
+                <!-- ********************************************************************** -->
+
+            </div>
+        </section>
+
+        <!-- ========================================================================== -->
+        <!-- SECTION 2: BEAUTY & MAKEUP -->
+        <!-- All products with id="beauty" will show when "Beauty & Makeup" is clicked -->
+        <!-- ========================================================================== -->
+        <section class="filter-section" id="beauty">
+            <h2>Beauty & Makeup</h2>
+            <div class="gallery">
+                
+                <!-- Placeholder for Beauty Products (You can replace this or add new ones below) -->
+                <div class="product-card" id="product-beauty-1">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x300?text=Beauty+Product" alt="Beauty Product">
+                    </div>
+                    <div class="product-info">
+                        <h2>Beauty Product Placeholder</h2>
+                        <p>Add your beauty products here.</p>
+                        <a href="#" class="buy-button" target="_blank">View Item</a>
+                    </div>
+                </div>
+
+                <!-- ********************************************************************** -->
+                <!-- ADD MORE BEAUTY PRODUCTS BELOW THIS LINE -->
+                <!-- Copy the template code at the bottom of this file and paste it here -->
+                <!-- ********************************************************************** -->
+
+            </div>
+        </section>
+
+        <!-- ========================================================================== -->
+        <!-- SECTION 3: FASHION -->
+        <!-- All products with id="fashion" will show when "Fashion" is clicked -->
+        <!-- ========================================================================== -->
+        <section class="filter-section" id="fashion">
+            <h2>Fashion</h2>
+            <div class="gallery">
+                
+                <!-- Placeholder for Fashion Products (Since we moved the others to Nails) -->
+                <div class="product-card" id="product-fashion-1">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x300?text=Fashion+Product" alt="Fashion Product">
+                    </div>
+                    <div class="product-info">
+                        <h2>Fashion Product Placeholder</h2>
+                        <p>Add your fashion products here.</p>
+                        <a href="#" class="buy-button" target="_blank">View Item</a>
+                    </div>
+                </div>
+
+                <!-- ********************************************************************** -->
+                <!-- ADD MORE FASHION PRODUCTS BELOW THIS LINE -->
+                <!-- Copy the template code at the bottom of this file and paste it here -->
+                <!-- ********************************************************************** -->
+
             </div>
         </section>
     </main>
  
-    <!-- Product Card Template (hidden, for copy-paste; not rendered by browsers) -->
+    <!-- ========================================================================== -->
+    <!-- PRODUCT CARD TEMPLATE (HIDDEN) -->
+    <!-- Use this code to create new product cards. Copy from <div...> to </div> -->
+    <!-- ========================================================================== -->
     <template id="product-card-template">
-        <!-- COPY THE CODE BELOW FOR EACH NEW PRODUCT -->
-        <!-- PASTE THIS CODE INTO THE <div class="gallery"> CONTAINER OF THE SECTION YOU WANT TO ADD TO -->
+        <!-- COPY START -->
         
-        <!-- IMPORTANT: Change id="product-X" to a unique number (e.g., product-4, product-5) -->
+        <!-- STEP 1: Change id="product-X" to a unique number (e.g., product-10, product-11) -->
         <div class="product-card" id="product-X">
             <div class="product-image">
+                <!-- STEP 2: Replace the link inside src="" with your product image link -->
                 <img src="https://via.placeholder.com/300x300?text=New+Product" alt="New Product">
             </div>
             <div class="product-info">
                 <h2>Product Title Here</h2>
                 <p>Product Description Here</p>
+                <!-- STEP 3: Replace the link inside href="" with your Amazon affiliate link -->
                 <a href="#" class="buy-button" target="_blank">View on Amazon</a>
             </div>
         </div>
+        
+        <!-- COPY END -->
     </template>
  
      <footer>
