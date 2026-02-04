@@ -121,7 +121,8 @@ section h2 {
     }
 }
 
-.product-card:target {
+.product-card:target,
+.product-card.glow-active {
     animation: magic-blink 2.5s ease-in-out;
     scroll-margin-top: 2rem; /* Ensure it's not hidden behind fixed headers if any */
 }
