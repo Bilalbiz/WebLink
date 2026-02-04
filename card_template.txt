@@ -1,4 +1,5 @@
 <!-- COPY THE CODE BELOW FOR EACH NEW PRODUCT -->
+<!-- PASTE THIS CODE INTO THE <div class="gallery"> CONTAINER OF THE SECTION YOU WANT TO ADD TO -->
 
 <!-- IMPORTANT: Change id="product-X" to a unique number (e.g., product-4, product-5) -->
 <div class="product-card" id="product-X">

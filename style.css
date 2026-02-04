@@ -25,6 +25,16 @@ header p {
     opacity: 0.9;
 }
 
+section h2 {
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #232f3e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -81,7 +91,7 @@ header p {
 
 .product-card:target {
     animation: magic-blink 2.5s ease-in-out;
-    scroll-margin-top: 2rem; /* Ensure it's not hidden behind fixed headers if any ok */
+    scroll-margin-top: 2rem; /* Ensure it's not hidden behind fixed headers if any */
 }
 
 .product-image {
