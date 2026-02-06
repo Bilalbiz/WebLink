@@ -133,18 +133,36 @@ const handleHashNavigation = () => {
             }
         }
 
-        const targetEl = productId ? document.getElementById(productId) : null;
+        const sectionEl = sectionId ? document.getElementById(sectionId) : null;
+        let targetEl = null;
+        if (sectionEl && productId) {
+            targetEl = sectionEl.querySelector('#' + productId);
+            if (!targetEl) {
+                const m = productId.match(/^product-(\d+)$/);
+                if (m) {
+                    const idx = parseInt(m[1], 10) - 1;
+                    const cards = sectionEl.querySelectorAll('.product-card');
+                    if (idx >= 0 && idx < cards.length) {
+                        targetEl = cards[idx];
+                    }
+                }
+            }
+        }
+        if (!targetEl && productId) {
+            targetEl = document.getElementById(productId);
+        }
         if (targetEl) {
             const parentSection = targetEl.closest('.filter-section');
-            const effectiveSectionId = parentSection ? parentSection.id : (sectionId || 'all');
+            const effectiveSectionId = sectionEl ? sectionId : (parentSection ? parentSection.id : 'all');
             filterSelection(effectiveSectionId);
 
             // Force :target behavior to be accurate to product id
-            if (window.location.hash !== '#' + productId) {
+            const finalId = targetEl.id || productId;
+            if (window.location.hash !== '#' + finalId) {
                 if (window.history && window.history.replaceState) {
-                    window.history.replaceState(null, '', '#' + productId);
+                    window.history.replaceState(null, '', '#' + finalId);
                 } else {
-                    window.location.hash = '#' + productId;
+                    window.location.hash = '#' + finalId;
                 }
             }
 
