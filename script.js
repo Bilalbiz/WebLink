@@ -22,6 +22,14 @@ function filterSelection(category) {
     });
 }
 
+function applyGlow(el) {
+    if (!el) return;
+    el.classList.add('glow-active');
+    setTimeout(() => {
+        el.classList.remove('glow-active');
+    }, 2500);
+}
+
 const renderProducts = (products) => {
     const template = document.getElementById('product-card-template');
     const galleries = document.querySelectorAll('.gallery[data-category]');
@@ -56,68 +64,76 @@ const renderProducts = (products) => {
 };
 
 const handleHashNavigation = () => {
-    const hash = window.location.hash;
+    const rawHash = window.location.hash;
+    if (!rawHash || rawHash.length <= 1) {
+        filterSelection('all');
+        return;
+    }
 
-    if (hash) {
-        // Remove the '#' character
-        const cleanHash = hash.substring(1);
-        
-        // CHECK FOR COMMA SEPARATED FORMAT: section-nails,product-1
-        if (cleanHash.includes(',')) {
-            const parts = cleanHash.split(',');
-            let sectionId = '';
-            let productId = '';
+    const cleanHash = rawHash.substring(1);
 
-            // Parse parts
-            parts.forEach(part => {
-                if (part.startsWith('section-')) {
-                    sectionId = part.replace('section-', '');
-                } else if (part.startsWith('product-')) {
-                    productId = part;
-                }
-            });
+    // Command-style: section-<id>,product-<id>
+    if (cleanHash.indexOf(',') !== -1) {
+        const parts = cleanHash.split(',');
+        let sectionId = '';
+        let productId = '';
 
-            if (sectionId && productId) {
-                // 1. Switch to the specified section
-                filterSelection(sectionId);
-
-                // 2. Find and Highlight the product
-                const targetElement = document.getElementById(productId);
-                if (targetElement) {
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        // Trigger custom glow animation class
-                        targetElement.classList.add('glow-active');
-                        // Remove class after animation finishes so it can be re-triggered if needed
-                        setTimeout(() => {
-                            targetElement.classList.remove('glow-active');
-                        }, 2500); 
-                    }, 100);
-                }
-            }
-        } 
-        // CHECK FOR SIMPLE ID FORMAT: #product-1
-        else {
-            const targetElement = document.getElementById(cleanHash);
-            if (targetElement) {
-                // Find parent section and switch to it
-                const section = targetElement.closest('.filter-section');
-                if (section) {
-                    filterSelection(section.id);
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        // :target pseudo-class handles the glow automatically here
-                    }, 100);
-                }
-            } else {
-                // If ID matches a section (e.g., #nails), switch to it
-                if (document.getElementById(cleanHash)?.classList.contains('filter-section')) {
-                    filterSelection(cleanHash);
-                } else {
-                    filterSelection('all');
-                }
+        for (let i = 0; i < parts.length; i++) {
+            const part = parts[i];
+            if (part.indexOf('section-') === 0) {
+                sectionId = part.replace('section-', '');
+            } else if (part.indexOf('product-') === 0) {
+                productId = part;
             }
         }
+
+        const targetEl = productId ? document.getElementById(productId) : null;
+        if (targetEl) {
+            const parentSection = targetEl.closest('.filter-section');
+            const effectiveSectionId = parentSection ? parentSection.id : (sectionId || 'all');
+            filterSelection(effectiveSectionId);
+
+            // Force :target behavior to be accurate to product id
+            if (window.location.hash !== '#' + productId) {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', '#' + productId);
+                } else {
+                    window.location.hash = '#' + productId;
+                }
+            }
+
+            setTimeout(() => {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                applyGlow(targetEl);
+            }, 100);
+            return;
+        }
+
+        // If product not found, at least switch section if provided
+        if (sectionId) {
+            filterSelection(sectionId);
+        } else {
+            filterSelection('all');
+        }
+        return;
+    }
+
+    // Simple product or section id
+    const targetEl = document.getElementById(cleanHash);
+    if (targetEl) {
+        const parentSection = targetEl.closest('.filter-section');
+        const secId = parentSection ? parentSection.id : 'all';
+        filterSelection(secId);
+        setTimeout(() => {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            applyGlow(targetEl);
+        }, 100);
+        return;
+    }
+
+    const maybeSection = document.getElementById(cleanHash);
+    if (maybeSection && maybeSection.classList && maybeSection.classList.contains('filter-section')) {
+        filterSelection(cleanHash);
     } else {
         filterSelection('all');
     }
@@ -152,3 +168,6 @@ document.addEventListener("DOMContentLoaded", function() {
             handleHashNavigation();
         });
 });
+
+// Re-run navigation logic whenever hash changes (e.g., user clicks a link)
+window.addEventListener('hashchange', handleHashNavigation);
