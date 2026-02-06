@@ -111,6 +111,14 @@ const handleHashNavigation = () => {
         const sectionEl = document.getElementById(sectionId);
         if (sectionEl && sectionEl.classList && sectionEl.classList.contains('filter-section')) {
             filterSelection(sectionId);
+            // Normalize hash to plain #<sectionId> to leverage simple-id handling and :target behavior
+            if (window.location.hash !== '#' + sectionId) {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', '#' + sectionId);
+                } else {
+                    window.location.hash = '#' + sectionId;
+                }
+            }
             setTimeout(() => {
                 sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 50);
