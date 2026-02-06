@@ -166,11 +166,12 @@ const handleHashNavigation = () => {
 
             // Force :target behavior to be accurate to product id
             const finalId = targetEl.id || productId;
-            if (window.location.hash !== '#' + finalId) {
+            const normalized = `#section-${effectiveSectionId},${finalId}`;
+            if (window.location.hash !== normalized) {
                 if (window.history && window.history.replaceState) {
-                    window.history.replaceState(null, '', '#' + finalId);
+                    window.history.replaceState(null, '', normalized);
                 } else {
-                    window.location.hash = '#' + finalId;
+                    window.location.hash = normalized;
                 }
             }
 
