@@ -30,6 +30,39 @@ function applyGlow(el) {
     }, 2500);
 }
 
+// Convert placeholder IDs like "product-X" to unique IDs so deep links work reliably
+function normalizeProductIds() {
+    const cards = Array.from(document.querySelectorAll('.product-card'));
+    const used = new Set();
+    let maxNum = 0;
+
+    cards.forEach((card) => {
+        const id = card.id || '';
+        if (id.startsWith('product-') && id !== 'product-X') {
+            used.add(id);
+            const num = parseInt(id.replace('product-', ''), 10);
+            if (!isNaN(num)) {
+                maxNum = Math.max(maxNum, num);
+            }
+        }
+    });
+
+    let nextNum = Math.max(10, maxNum + 1);
+
+    cards.forEach((card) => {
+        const id = card.id || '';
+        if (!id || id === 'product-X') {
+            while (used.has(`product-${nextNum}`)) {
+                nextNum++;
+            }
+            const newId = `product-${nextNum}`;
+            card.id = newId;
+            used.add(newId);
+            nextNum++;
+        }
+    });
+}
+
 const renderProducts = (products) => {
     const template = document.getElementById('product-card-template');
     const galleries = document.querySelectorAll('.gallery[data-category]');
@@ -154,6 +187,7 @@ document.head.appendChild(style);
 // 1. #product-1  (Auto-detects section)
 // 2. #section-nails,product-1 (Explicit section and product)
 document.addEventListener("DOMContentLoaded", function() {
+    normalizeProductIds();
     fetch('data/products.json')
         .then((response) => response.json())
         .then((data) => {
