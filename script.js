@@ -105,6 +105,19 @@ const handleHashNavigation = () => {
 
     const cleanHash = rawHash.substring(1);
 
+    // Single-section format: #section-<id>
+    if (cleanHash.indexOf(',') === -1 && cleanHash.indexOf('section-') === 0) {
+        const sectionId = cleanHash.replace('section-', '');
+        const sectionEl = document.getElementById(sectionId);
+        if (sectionEl && sectionEl.classList && sectionEl.classList.contains('filter-section')) {
+            filterSelection(sectionId);
+            setTimeout(() => {
+                sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+            return;
+        }
+    }
+
     // Command-style: section-<id>,product-<id>
     if (cleanHash.indexOf(',') !== -1) {
         const parts = cleanHash.split(',');
