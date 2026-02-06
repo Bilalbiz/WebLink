@@ -22,21 +22,40 @@ function filterSelection(category) {
     });
 }
 
-// Add fade in animation to style
-const style = document.createElement('style');
-style.innerHTML = `
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-`;
-document.head.appendChild(style);
+const renderProducts = (products) => {
+    const template = document.getElementById('product-card-template');
+    const galleries = document.querySelectorAll('.gallery[data-category]');
 
-// AUTOMATICALLY DETECT SECTION FROM URL LINK
-// Supports formats:
-// 1. #product-1  (Auto-detects section)
-// 2. #section-nails,product-1 (Explicit section and product)
-document.addEventListener("DOMContentLoaded", function() {
+    galleries.forEach((gallery) => {
+        const category = gallery.dataset.category;
+        const categoryProducts = products.filter((product) => product.category === category);
+
+        gallery.innerHTML = '';
+
+        if (categoryProducts.length === 0) {
+            const emptyMessage = document.createElement('p');
+            emptyMessage.className = 'gallery-status';
+            emptyMessage.textContent = 'No products yet.';
+            gallery.appendChild(emptyMessage);
+            return;
+        }
+
+        categoryProducts.forEach((product) => {
+            const card = template.content.firstElementChild.cloneNode(true);
+            card.id = product.id;
+            const img = card.querySelector('img');
+            img.src = product.image;
+            img.alt = product.title;
+            card.querySelector('h2').textContent = product.title;
+            card.querySelector('p').textContent = product.description;
+            const link = card.querySelector('a');
+            link.href = product.url;
+            gallery.appendChild(card);
+        });
+    });
+};
+
+const handleHashNavigation = () => {
     const hash = window.location.hash;
 
     if (hash) {
@@ -102,4 +121,34 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
         filterSelection('all');
     }
+};
+
+// Add fade in animation to style
+const style = document.createElement('style');
+style.innerHTML = `
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+`;
+document.head.appendChild(style);
+
+// AUTOMATICALLY DETECT SECTION FROM URL LINK
+// Supports formats:
+// 1. #product-1  (Auto-detects section)
+// 2. #section-nails,product-1 (Explicit section and product)
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('data/products.json')
+        .then((response) => response.json())
+        .then((data) => {
+            renderProducts(Array.isArray(data.products) ? data.products : []);
+            handleHashNavigation();
+        })
+        .catch((error) => {
+            console.error('Failed to load products:', error);
+            document.querySelectorAll('.gallery-status').forEach((status) => {
+                status.textContent = 'Unable to load products right now.';
+            });
+            handleHashNavigation();
+        });
 });
