@@ -1,18 +1,26 @@
-<!-- COPY THE CODE BELOW FOR EACH NEW PRODUCT -->
-<!-- PASTE THIS CODE INTO THE <div class="gallery"> CONTAINER OF THE SECTION YOU WANT TO ADD TO -->
+Add new products by editing JSON instead of HTML.
 
-<!-- IMPORTANT: Change id="product-X" to a unique number (e.g., product-4, product-5) -->
-<div class="product-card" id="product-X">
-    <div class="product-image">
-        <!-- STEP 1: PASTE IMAGE LINK INSIDE src="" BELOW -->
-        <img src="https://via.placeholder.com/300x300?text=New+Product" alt="New Product">
-    </div>
-    <div class="product-info">
-        <h2>Product Title Here</h2>
-        <p>Product Description Here</p>
-        <!-- STEP 2: PASTE LINK INSIDE href="" BELOW -->
-        <a href="#" class="buy-button" target="_blank">View on Amazon</a>
-    </div>
-</div>
+Option 1: Add directly to data/products.json (shows immediately)
+--------------------------------------------------------------
+{
+  "id": "product-11",
+  "category": "nails",
+  "title": "Product Title Here",
+  "description": "Short description here.",
+  "image": "https://example.com/image.jpg",
+  "url": "https://amzn.to/your-short-link"
+}
 
-<!-- END OF CARD CODE -->
+Option 2: Add to data/backlog.json (for hourly automation)
+----------------------------------------------------------
+{
+  "category": "beauty",
+  "title": "Product Title Here",
+  "description": "Short description here.",
+  "image": "https://example.com/image.jpg",
+  "url": "https://amzn.to/your-short-link"
+}
+
+- The GitHub Action will move up to 3 products per hour from data/backlog.json
+  into data/products.json.
+- Keep URLs and images in the formats required by Amazon Associates/PA-API.
