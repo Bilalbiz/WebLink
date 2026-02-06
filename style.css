@@ -76,6 +76,13 @@ section h2 {
     margin: 0 auto;
 }
 
+.gallery-status {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    grid-column: 1 / -1;
+}
+
 .product-card {
     background: #fff;
     border-radius: 8px;
