@@ -30,9 +30,7 @@ function filterSelection(category) {
 function applyGlow(el) {
     if (!el) return;
     el.classList.add('glow-active');
-    setTimeout(() => {
-        el.classList.remove('glow-active');
-    }, 2500);
+    setTimeout(() => el.classList.remove('glow-active'), 2500);
 }
 
 // Normalize IDs for product cards with "product-X"
@@ -66,10 +64,11 @@ function normalizeProductIds() {
 // Render products dynamically from JSON
 const renderProducts = (products) => {
     const template = document.getElementById('product-card-template');
-    const galleries = document.querySelectorAll('.gallery');
+    const sections = document.querySelectorAll('.filter-section');
 
-    galleries.forEach(gallery => {
-        const category = gallery.getAttribute('id'); // ID of section = category
+    sections.forEach(section => {
+        const gallery = section.querySelector('.gallery');
+        const category = section.id; // ✅ Get category from section id
         const categoryProducts = products.filter(p => p.category === category);
 
         gallery.innerHTML = ''; // Clear old cards
@@ -85,13 +84,11 @@ const renderProducts = (products) => {
         categoryProducts.forEach(product => {
             const card = template.content.firstElementChild.cloneNode(true);
             card.id = product.id;
-            const img = card.querySelector('img');
-            img.src = product.image;
-            img.alt = product.title;
+            card.querySelector('img').src = product.image;
+            card.querySelector('img').alt = product.title;
             card.querySelector('h2').textContent = product.title;
             card.querySelector('p').textContent = product.description;
-            const link = card.querySelector('a');
-            link.href = product.url;
+            card.querySelector('a').href = product.url;
             gallery.appendChild(card);
         });
     });
@@ -107,23 +104,6 @@ const handleHashNavigation = () => {
 
     const cleanHash = rawHash.substring(1);
 
-    // Single-section format: #section-<id>
-    if (cleanHash.indexOf(',') === -1 && cleanHash.indexOf('section-') === 0) {
-        const sectionId = cleanHash.replace('section-', '');
-        const sectionEl = document.getElementById(sectionId);
-        if (sectionEl) {
-            filterSelection(sectionId);
-            if (window.location.hash !== '#' + sectionId) {
-                window.history.replaceState(null, '', '#' + sectionId);
-            }
-            setTimeout(() => {
-                sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 50);
-            return;
-        }
-    }
-
-    // Command-style: section-<id>,product-<id>
     if (cleanHash.includes(',')) {
         const parts = cleanHash.split(',');
         let sectionId = '';
@@ -135,10 +115,7 @@ const handleHashNavigation = () => {
         });
 
         const sectionEl = sectionId ? document.getElementById(sectionId) : null;
-        let targetEl = null;
-
-        if (sectionEl && productId) targetEl = sectionEl.querySelector('#' + productId);
-        if (!targetEl && productId) targetEl = document.getElementById(productId);
+        let targetEl = sectionEl ? sectionEl.querySelector('#' + productId) : document.getElementById(productId);
 
         if (targetEl) {
             const effectiveSectionId = sectionEl ? sectionId : (targetEl.closest('.filter-section')?.id || 'all');
@@ -159,7 +136,6 @@ const handleHashNavigation = () => {
         return;
     }
 
-    // Simple product or section
     const targetEl = document.getElementById(cleanHash);
     if (targetEl) {
         const secId = targetEl.closest('.filter-section')?.id || 'all';
@@ -192,7 +168,7 @@ document.head.appendChild(style);
 document.addEventListener("DOMContentLoaded", function() {
     normalizeProductIds();
 
-    // Load products.json from same folder (root)
+    // Load products.json from same folder
     fetch('products.json')
         .then(res => res.json())
         .then(data => {
