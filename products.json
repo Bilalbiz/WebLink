@@ -1,0 +1,180 @@
+{
+  "products": [
+    {
+      "id": "product-1",
+      "title": "Pink Nails Valentine day",
+      "description": "This product is awesome.",
+      "image": "https://m.media-amazon.com/images/I/71zwb5kjb9L._SX466_.jpg",
+      "url": "https://www.amazon.com/Valentines-Medium-Rhinestones-Designs-Acrylic/dp/B0DN62RNC2?utm_source=Pinterest&utm_medium=organic",
+      "category": "nails"
+    },
+    {
+      "id": "product-2",
+      "title": "Pin/Redish glitter artificial Nails",
+      "description": "This Product is awesome.",
+      "image": "https://m.media-amazon.com/images/I/716wPvKc-VL._SX466_.jpg",
+      "url": "https://amzn.to/4rdxhZb",
+      "category": "nails"
+    },
+    {
+      "id": "product-3",
+      "title": "Product 3 Title",
+      "description": "Description for product 3. Replace this text with your own.",
+      "image": "https://m.media-amazon.com/images/I/61EShkkCAcL._SX466_.jpg",
+      "url": "https://amzn.to/4ki4pw2",
+      "category": "nails"
+    },
+    {
+      "id": "product-4",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/71BboxILfcL._SX466_PIbundle-24,TopRight,0,0_AA466SH20_.jpg",
+      "url": "https://amzn.to/3LLSOss",
+      "category": "nails"
+    },
+    {
+      "id": "product-5",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/71nWC+-eMXL._SX466_.jpg",
+      "url": "https://amzn.to/45HtACi",
+      "category": "nails"
+    },
+    {
+      "id": "product-6",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/81v6HChJHBL._SX466_.jpg",
+      "url": "https://amzn.to/4knrk9m",
+      "category": "nails"
+    },
+    {
+      "id": "product-7",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/51IG14v4U0L._SX679_PIbundle-24,TopRight,0,0_AA679SH20_.jpg",
+      "url": "https://amzn.to/4btsHAR",
+      "category": "nails"
+    },
+    {
+      "id": "product-8",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/712mp7mjEwL._SX466_.jpg",
+      "url": "https://amzn.to/4qVMT37",
+      "category": "nails"
+    },
+    {
+      "id": "product-9",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/61C6Ui-WGJL._SX466_.jpg",
+      "url": "https://amzn.to/3ZhSWmx",
+      "category": "nails"
+    },
+    {
+      "id": "product-10",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/61IItKfkFNL._SX466_PIbundle-24,TopRight,0,0_AA466SH20_.jpg",
+      "url": "https://amzn.to/4rdIuZm",
+      "category": "nails"
+    },
+    {
+      "id": "product-11",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/71zUUfudG3L._SX466_.jpg",
+      "url": "https://amzn.to/45MnVLe",
+      "category": "nails"
+    },
+    {
+      "id": "product-13",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/71969-uXpWL._SX466_.jpg",
+      "url": "https://amzn.to/4rRB3qY",
+      "category": "nails"
+    },
+    {
+      "id": "product-14",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/71V67ZKm8YL._SX466_.jpg",
+      "url": "https://amzn.to/4acaDKw",
+      "category": "nails"
+    },
+    {
+      "id": "product-15",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/61Zy0ZzKXhL._SX466_.jpg",
+      "url": "https://amzn.to/4rfnhOJ",
+      "category": "nails"
+    },
+    {
+      "id": "product-beauty-1",
+      "title": "Beauty Product Placeholder",
+      "description": "Add your beauty products here.",
+      "image": "https://m.media-amazon.com/images/I/61R7+fLIrxL.jpg",
+      "url": "https://amzn.to/45HgBk0",
+      "category": "beauty"
+    },
+    {
+      "id": "product-beauty-2",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/71oFyMFF2jL._SX522_.jpg",
+      "url": "https://amzn.to/3ZomjDL",
+      "category": "beauty"
+    },
+    {
+      "id": "product-beauty-3",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/710yjjR2ZqL._SL1500_.jpg",
+      "url": "https://amzn.to/4r4AHgF",
+      "category": "beauty"
+    },
+    {
+      "id": "product-beauty-4",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/71-BQKj9+wL._SX522_.jpg",
+      "url": "https://amzn.to/3Om0rGI",
+      "category": "beauty"
+    },
+    {
+      "id": "product-fashion-1",
+      "title": "Fashion Product Placeholder",
+      "description": "Add your fashion products here.",
+      "image": "https://m.media-amazon.com/images/I/61IWkNmPugL._AC_SX569_.jpg",
+      "url": "https://amzn.to/4bGqZfx",
+      "category": "fashion"
+    },
+    {
+      "id": "product-fashion-2",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/61Mvr842lsL._SX679_.jpg",
+      "url": "https://amzn.to/4tyNiKO",
+      "category": "fashion"
+    },
+    {
+      "id": "product-fashion-3",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/61JOCYHN5QL._SX522_.jpg",
+      "url": "https://amzn.to/3OfFgpV",
+      "category": "fashion"
+    },
+    {
+      "id": "product-fashion-4",
+      "title": "Product Title Here",
+      "description": "Product Description Here",
+      "image": "https://m.media-amazon.com/images/I/61o7CMt89YL._SX522_.jpg",
+      "url": "https://amzn.to/3M7nhRW",
+      "category": "fashion"
+    }
+  ]
+}
