@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
     normalizeProductIds();
 
     // Load products.json from same folder
-    fetch('products.json')
+    fetch('./products.json')
         .then(res => res.json())
         .then(data => {
             renderProducts(Array.isArray(data.products) ? data.products : []);
