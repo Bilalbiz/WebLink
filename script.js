@@ -1,3 +1,8 @@
+// ========================================================================
+// Advanced Product Page Script - JSON in same folder as index.html
+// ========================================================================
+
+// Filter sections based on category
 function filterSelection(category) {
     const sections = document.querySelectorAll('.filter-section');
     const buttons = document.querySelectorAll('.nav-btn');
@@ -5,7 +10,6 @@ function filterSelection(category) {
     // Update active button
     buttons.forEach(btn => {
         btn.classList.remove('active');
-        // Check if the button's onclick attribute contains the category
         if (btn.getAttribute('onclick').includes(`'${category}'`)) {
             btn.classList.add('active');
         }
@@ -22,6 +26,7 @@ function filterSelection(category) {
     });
 }
 
+// Glow effect on a product card
 function applyGlow(el) {
     if (!el) return;
     el.classList.add('glow-active');
@@ -30,31 +35,26 @@ function applyGlow(el) {
     }, 2500);
 }
 
-// Convert placeholder IDs like "product-X" to unique IDs so deep links work reliably
+// Normalize IDs for product cards with "product-X"
 function normalizeProductIds() {
     const cards = Array.from(document.querySelectorAll('.product-card'));
     const used = new Set();
     let maxNum = 0;
 
-    cards.forEach((card) => {
+    cards.forEach(card => {
         const id = card.id || '';
         if (id.startsWith('product-') && id !== 'product-X') {
             used.add(id);
             const num = parseInt(id.replace('product-', ''), 10);
-            if (!isNaN(num)) {
-                maxNum = Math.max(maxNum, num);
-            }
+            if (!isNaN(num)) maxNum = Math.max(maxNum, num);
         }
     });
 
     let nextNum = Math.max(10, maxNum + 1);
-
-    cards.forEach((card) => {
+    cards.forEach(card => {
         const id = card.id || '';
         if (!id || id === 'product-X') {
-            while (used.has(`product-${nextNum}`)) {
-                nextNum++;
-            }
+            while (used.has(`product-${nextNum}`)) nextNum++;
             const newId = `product-${nextNum}`;
             card.id = newId;
             used.add(newId);
@@ -63,15 +63,16 @@ function normalizeProductIds() {
     });
 }
 
+// Render products dynamically from JSON
 const renderProducts = (products) => {
     const template = document.getElementById('product-card-template');
-    const galleries = document.querySelectorAll('.gallery[data-category]');
+    const galleries = document.querySelectorAll('.gallery');
 
-    galleries.forEach((gallery) => {
-        const category = gallery.dataset.category;
-        const categoryProducts = products.filter((product) => product.category === category);
+    galleries.forEach(gallery => {
+        const category = gallery.getAttribute('id'); // ID of section = category
+        const categoryProducts = products.filter(p => p.category === category);
 
-        gallery.innerHTML = '';
+        gallery.innerHTML = ''; // Clear old cards
 
         if (categoryProducts.length === 0) {
             const emptyMessage = document.createElement('p');
@@ -81,7 +82,7 @@ const renderProducts = (products) => {
             return;
         }
 
-        categoryProducts.forEach((product) => {
+        categoryProducts.forEach(product => {
             const card = template.content.firstElementChild.cloneNode(true);
             card.id = product.id;
             const img = card.querySelector('img');
@@ -96,6 +97,7 @@ const renderProducts = (products) => {
     });
 };
 
+// Handle deep linking via URL hash
 const handleHashNavigation = () => {
     const rawHash = window.location.hash;
     if (!rawHash || rawHash.length <= 1) {
@@ -109,15 +111,10 @@ const handleHashNavigation = () => {
     if (cleanHash.indexOf(',') === -1 && cleanHash.indexOf('section-') === 0) {
         const sectionId = cleanHash.replace('section-', '');
         const sectionEl = document.getElementById(sectionId);
-        if (sectionEl && sectionEl.classList && sectionEl.classList.contains('filter-section')) {
+        if (sectionEl) {
             filterSelection(sectionId);
-            // Normalize hash to plain #<sectionId> to leverage simple-id handling and :target behavior
             if (window.location.hash !== '#' + sectionId) {
-                if (window.history && window.history.replaceState) {
-                    window.history.replaceState(null, '', '#' + sectionId);
-                } else {
-                    window.location.hash = '#' + sectionId;
-                }
+                window.history.replaceState(null, '', '#' + sectionId);
             }
             setTimeout(() => {
                 sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -127,53 +124,28 @@ const handleHashNavigation = () => {
     }
 
     // Command-style: section-<id>,product-<id>
-    if (cleanHash.indexOf(',') !== -1) {
+    if (cleanHash.includes(',')) {
         const parts = cleanHash.split(',');
         let sectionId = '';
         let productId = '';
 
-        for (let i = 0; i < parts.length; i++) {
-            const part = parts[i];
-            if (part.indexOf('section-') === 0) {
-                sectionId = part.replace('section-', '');
-            } else if (part.indexOf('product-') === 0) {
-                productId = part;
-            }
-        }
+        parts.forEach(part => {
+            if (part.startsWith('section-')) sectionId = part.replace('section-', '');
+            else if (part.startsWith('product-')) productId = part;
+        });
 
         const sectionEl = sectionId ? document.getElementById(sectionId) : null;
         let targetEl = null;
-        if (sectionEl && productId) {
-            targetEl = sectionEl.querySelector('#' + productId);
-            if (!targetEl) {
-                const m = productId.match(/^product-(\d+)$/);
-                if (m) {
-                    const idx = parseInt(m[1], 10) - 1;
-                    const cards = sectionEl.querySelectorAll('.product-card');
-                    if (idx >= 0 && idx < cards.length) {
-                        targetEl = cards[idx];
-                    }
-                }
-            }
-        }
-        if (!targetEl && productId) {
-            targetEl = document.getElementById(productId);
-        }
+
+        if (sectionEl && productId) targetEl = sectionEl.querySelector('#' + productId);
+        if (!targetEl && productId) targetEl = document.getElementById(productId);
+
         if (targetEl) {
-            const parentSection = targetEl.closest('.filter-section');
-            const effectiveSectionId = sectionEl ? sectionId : (parentSection ? parentSection.id : 'all');
+            const effectiveSectionId = sectionEl ? sectionId : (targetEl.closest('.filter-section')?.id || 'all');
             filterSelection(effectiveSectionId);
 
-            // Force :target behavior to be accurate to product id
-            const finalId = targetEl.id || productId;
-            const normalized = `#section-${effectiveSectionId},${finalId}`;
-            if (window.location.hash !== normalized) {
-                if (window.history && window.history.replaceState) {
-                    window.history.replaceState(null, '', normalized);
-                } else {
-                    window.location.hash = normalized;
-                }
-            }
+            const normalized = `#section-${effectiveSectionId},${targetEl.id}`;
+            if (window.location.hash !== normalized) window.history.replaceState(null, '', normalized);
 
             setTimeout(() => {
                 targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -182,20 +154,15 @@ const handleHashNavigation = () => {
             return;
         }
 
-        // If product not found, at least switch section if provided
-        if (sectionId) {
-            filterSelection(sectionId);
-        } else {
-            filterSelection('all');
-        }
+        if (sectionId) filterSelection(sectionId);
+        else filterSelection('all');
         return;
     }
 
-    // Simple product or section id
+    // Simple product or section
     const targetEl = document.getElementById(cleanHash);
     if (targetEl) {
-        const parentSection = targetEl.closest('.filter-section');
-        const secId = parentSection ? parentSection.id : 'all';
+        const secId = targetEl.closest('.filter-section')?.id || 'all';
         filterSelection(secId);
         setTimeout(() => {
             targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -205,14 +172,11 @@ const handleHashNavigation = () => {
     }
 
     const maybeSection = document.getElementById(cleanHash);
-    if (maybeSection && maybeSection.classList && maybeSection.classList.contains('filter-section')) {
-        filterSelection(cleanHash);
-    } else {
-        filterSelection('all');
-    }
+    if (maybeSection && maybeSection.classList.contains('filter-section')) filterSelection(cleanHash);
+    else filterSelection('all');
 };
 
-// Add fade in animation to style
+// Fade-in animation
 const style = document.createElement('style');
 style.innerHTML = `
     @keyframes fadeIn {
@@ -222,26 +186,25 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-// AUTOMATICALLY DETECT SECTION FROM URL LINK
-// Supports formats:
-// 1. #product-1  (Auto-detects section)
-// 2. #section-nails,product-1 (Explicit section and product)
+// ==================================================
+// MAIN: Run on page load
+// ==================================================
 document.addEventListener("DOMContentLoaded", function() {
     normalizeProductIds();
-    fetch('data/products.json')
-        .then((response) => response.json())
-        .then((data) => {
+
+    // Load products.json from same folder (root)
+    fetch('products.json')
+        .then(res => res.json())
+        .then(data => {
             renderProducts(Array.isArray(data.products) ? data.products : []);
             handleHashNavigation();
         })
-        .catch((error) => {
-            console.error('Failed to load products:', error);
-            document.querySelectorAll('.gallery-status').forEach((status) => {
-                status.textContent = 'Unable to load products right now.';
-            });
+        .catch(err => {
+            console.error('Failed to load products:', err);
+            document.querySelectorAll('.gallery-status').forEach(s => s.textContent = 'Unable to load products right now.');
             handleHashNavigation();
         });
 });
 
-// Re-run navigation logic whenever hash changes (e.g., user clicks a link)
+// Re-run hash navigation on hash change
 window.addEventListener('hashchange', handleHashNavigation);
